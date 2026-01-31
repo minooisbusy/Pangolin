@@ -1,6 +1,6 @@
 # Find Pangolin (https://github.com/stevenlovegrove/Pangolin)
 find_package(Pangolin 0.5 REQUIRED)
-find_package(Threads QUIET)
+find_package(Threads REQUIRED)
 
 if(Theads_FOUND)
     add_executable(HelloPangolinThreads main.cpp)

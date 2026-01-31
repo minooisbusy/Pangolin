@@ -44,7 +44,7 @@ int main(/*int argc, char* argv[]*/)
   pangolin::Var<bool> a_button("ui.A_Button",false,false);
   pangolin::Var<double> a_double("ui.A_Double",3,0,5);
   pangolin::Var<int> an_int("ui.An_Int",2,0,5);
-  pangolin::Var<double> a_double_log("ui.Log_scale",3,1,1E4, true);
+  pangolin::Var<double> a_double_log("ui.Log_scale",3,1,1E4, true);//마지막인자 true->logscale
   pangolin::Var<bool> a_checkbox("ui.A_Checkbox",false,true);
   pangolin::Var<int> an_int_no_input("ui.An_Int_No_Input",2);
   pangolin::Var<std::string> a_string("ui.A_String", "Edit ME!");

@@ -1,39 +1,31 @@
-# Basic OpenGL Tutorial with Pangolin
+# Pangolin을 이용한 OpenGL 기초 튜토리얼
 
-By popular request, here is a set of basic OpenGL intros for people wanting to get going quickly with Pangolin.
+많은 요청에 따라, Pangolin을 사용하여 OpenGL을 빠르게 시작하고자 하는 분들을 위해 기초적인 OpenGL 소개 예제를 준비했습니다.
 
 #### gl_intro_triangle
 
-Drawing a triangle is the *HelloWorld* of OpenGL and a good place for us to start. 
+삼각형 그리기는 OpenGL의 *HelloWorld*와 같은 간단한 예제이며, 시작하기에 좋은 예제입니다.
 
-`1_gl_intro_classic_triangle.cpp`: In the **classic** version, Pangolin's main use is creating a window and OpenGL context that we can use without platform specific code. [GLFW](https://www.glfw.org/) would be a good alternative if this is your only aim. Notice drawing the triangle takes 3 function calls and there is a matched Enable... / Disable... call that we must take care to pair.
+`1_gl_intro_classic_triangle.cpp`: **클래식** 버전에서 Pangolin의 주요 용도는 플랫폼별 코드를 사용하지 않고도 사용할 수 있는 창과 OpenGL 컨텍스트를 생성하는 것입니다. 만약 이것이 유일한 목적이라면 GLFW(https://www.glfw.org/)를 사용하는 것이 좋은 대안입니다. 삼각형을 그리는 데에는 세 번의 함수 호출이 필요하며, 활성화/비활성화 호출이 각각 짝을 이루도록 주의해야 합니다.
 
-`1_gl_intro_pango_triangle.cpp`: This is the **pango** version where we make use of a simple utilitiy method to accomplish the same as before. Not much to write home about, but you can see the general ethos of Pangolin is to reduce OpenGL boilerplate without getting too fancy.
-
-
+`1_gl_intro_pango_triangle.cpp`: 이 예제는 **Pangolin** 버전으로, 이전과 동일한 작업을 수행하는 간단한 유틸리티 메서드를 사용합니다. 특별히 대단한 건 아니지만, Pangolin의 전반적인 철학은 지나치게 복잡하지 않으면서 OpenGL의 기본 코드를 줄이는 데 있다는 것을 알 수 있습니다.
 
 #### gl_intro_triangle_vbo
 
-`2_gl_intro_classic_triangle_vbo.cpp`: In the previous example, the vertices of the triangle live in your machines main memory. Your poor graphics card is being drip fed the vertices each time the image is redrawn every frame. This VBO (Vertex Buffer Object) example instead copies the vertex data to your GPU's memory once, and then only references it later. Your graphics card then gets to keep it handy (in probably faster memory) without repeated transfers over a shared bus. The **classic** version uses only the regular OpenGL API. You'll notice it is a C API, and we're notably missing C++ idioms like [RAII](https://en.wikipedia.org/wiki/Resource_acquisition_is_initialization) to make sure we don't leak resources such as the VBO buffer.
+`2_gl_intro_classic_triangle_vbo.cpp`: 이전 예제에서는 삼각형의 꼭짓점들이 컴퓨터의 메인 메모리에 저장되었습니다. 그래픽 카드는 매 프레임마다 이미지가 다시 그려질 때마다 꼭짓점 데이터를 조금씩 받아 써야 했습니다. 이 VBO(Vertex Buffer Object) 예제는 꼭짓점 데이터를 GPU 메모리에 한 번만 복사한 다음, 이후에는 참조만 합니다. 그러면 그래픽 카드는 공유 버스를 통한 반복적인 전송 없이 (아마도 더 빠른 메모리에) 데이터를 편리하게 보관할 수 있습니다. **클래식** 버전은 일반 OpenGL API만 사용합니다. 보시다시피 C API이며, VBO 버퍼와 같은 리소스 누수를 방지하기 위해 [RAII](https://en.wikipedia.org/wiki/Resource_acquisition_is_initialization)와 같은 C++ 관용구가 빠져 있습니다.
 
-`2_gl_intro_pango_triangle_vbo.cpp`: The **pango** version gets a bit more compact where we make use of the `pangolin::GlBuffer` wrapper to manage the GL object lifetime.
-
-
+`2_gl_intro_pango_triangle_vbo.cpp`: **pango** 버전은 `pangolin::GlBuffer` 래퍼를 사용하여 GL 객체의 수명 주기를 관리함으로써 코드가 좀 더 간결해졌습니다.
 
 #### gl_intro_triangle_vbo_shader
 
-`3_gl_intro_classic_triangle_vbo_shader.cpp`: Okay, so I lied - people don't really recommend using the 'fixed pipeline' for rendering stuff in OpenGL anymore - you're meant to use *GLSL shaders*, code that can run on your graphics hardware to more explicitly outline how you want things to appear. Most of what we had before was fine, but `glColor3f` is normally replaced by shader output, plus a bunch of other stuff that we've not introduced anyway, so don't panic. Personally, the **classic** version gives me shudders - just look at all the boilerplate! 
+`3_gl_intro_classic_triangle_vbo_shader.cpp`: 사실, 제가 거짓말을 했습니다. 요즘에는 OpenGL에서 렌더링할 때 '고정 파이프라인'을 사용하는 것을 권장하지 않습니다. 그래픽 하드웨어에서 실행되는 코드인 *GLSL(OpenGL Shading Language) 셰이더*를 사용하여 원하는 화면을 더욱 명확하게 표현하는 것이 좋습니다. 이전 버전 대부분은 괜찮았지만, `glColor3f`는 일반적으로 셰이더 출력으로 대체되고, 그 외에도 우리가 아직 소개하지 않은 여러 가지 기능이 추가되었으니 너무 걱정하지 마세요. 개인적으로 **기존** 버전은 보기만 해도 끔찍합니다. 얼마나 많은 상용구 코드가 있는지 보세요!
 
-`3_gl_intro_pango_triangle_vbo_shader.cpp`: The **pango** version shows how to use some of its C++ wrappers that you'll hopefully agree improve readability. Pangolin also has a few utilities to help with writing shaders, most notable here for those familiar with GLSL is Pangolins preprocessor which allows you to `#include`, `#expect` and `#define` things, as well as load multiple shaders from one file with the `@start` annotations.
-
-
+`3_gl_intro_pango_triangle_vbo_shader.cpp`: **Pangolin** 버전은 가독성을 향상시키는 데 도움이 되는 C++ 래퍼 사용법을 보여줍니다. Pangolin에는 셰이더 작성에 도움이 되는 몇 가지 유틸리티가 있는데, GLSL에 익숙한 사람이라면 `#include`, `#expect`, `#define`을 사용할 수 있고, `@start` 어노테이션을 통해 한 파일에서 여러 셰이더를 로드할 수 있는 Pangolin 전처리기가 가장 눈에 띌 것입니다.
 
 #### gl_intro_viewport
 
-Okay, I've finished trying to outline how much boilerplate is needed with the regular OpenGL API. Here is a simple intro on how to use Pangolin to organize sub-views of the main window. Pangolin will take care of resizing these views as the window is resized which you would otherwise do manually. Notice we've ditched the shaders again because unless you really care about performance, I wont tell people you're using the deprecated pipeline if you dont. It's really your choice - you can use Pangolin or not either way.
-
-
+자, 이제 일반 OpenGL API에서 필요한 상용구 코드가 얼마나 많은지 간략하게 설명해 보겠습니다. 여기서는 Pangolin을 사용하여 메인 창의 하위 뷰를 구성하는 방법에 대한 간단한 소개입니다. Pangolin은 창 크기가 조정될 때 이러한 뷰의 크기도 자동으로 조정해 줍니다. 그렇지 않으면 수동으로 조정해야 하는 번거로움을 덜어줍니다. 성능을 정말로 중요하게 생각하지 않는다면, 셰이더를 사용하지 않는다는 사실을 굳이 다른 사람들에게 알리고 싶지 않기 때문에 이번에도 셰이더를 사용하지 않았습니다. Pangolin을 사용할지 여부는 전적으로 여러분의 선택입니다.
 
 #### gl_intro_view_transforms
 
-In this example we've moved from Flatland into 3D! Doing so requires us to get acquinted with a few important transforms that map from different coordinate systems. In the previous examples, our trusty triangle was getting defined on the XY plane within a box from bottom-left (-1.0,-1.0) to top-right (1.0,1.0) which is then mapped to pixels by the specified viewport. This coordinate system is called *normalized device coordinates*, so named because it is independent of final render resolution but represents the final 2D mapping of render primitives. There are some other important coordinate systems in OpenGL (namely clip coordinates), but what really matters is that whatever coordinate system we care about can somehow get converted into one OpenGL cares about. For this, we talk about coordinate transforms! To make like easy, we try to use linear transforms. Since perspective projection isn't linear, we use homogeneous coordinates to cheat. OpenGL's *fixed pipeline* has several built-in capabilities for working with these 4x4 homogeneous transforms, but the modern OpenGL way is to handle all that stuff ourselves. I'd recommend learning a bit more from the excellent resource [songho](https://www.songho.ca/opengl/gl_transform.html), but you can probably pick up a lot as a practitioner from the code.
+이번 예제에서는 평면에서 3D로 넘어왔습니다! 이를 위해서는 서로 다른 좌표계 간의 변환에 대해 몇 가지 중요한 사항을 알아야 합니다. 이전 예제에서는 XY 평면에서 왼쪽 아래(-1.0,-1.0)에서 오른쪽 위(1.0,1.0)까지의 상자 안에 삼각형을 정의한 다음, 지정된 뷰포트에 따라 픽셀로 변환했습니다. 이 좌표계를 *정규화된 장치 좌표계*라고 하는데, 최종 렌더링 해상도와는 무관하게 렌더링 기본 요소의 최종 2D 매핑을 나타내기 때문입니다. OpenGL에는 클립 좌표계와 같은 다른 중요한 좌표계도 있지만, 핵심은 우리가 사용하는 좌표계를 OpenGL에서 사용하는 좌표계로 변환하는 것입니다. 이를 위해 좌표 변환이라는 것을 사용합니다! 변환을 쉽게 하기 위해 선형 변환을 사용하려고 하지만, 원근 투영은 선형이 아니므로 동차 좌표계를 사용합니다. OpenGL의 *고정 파이프라인*에는 이러한 4x4 동차 변환을 처리하는 여러 내장 기능이 있지만, 최신 OpenGL 방식은 이러한 모든 처리를 직접 수행하는 것입니다. [songho](https://www.songho.ca/opengl/gl_transform.html)에서 더 자세히 알아보는 것을 추천하지만, 코드를 직접 작성해도 많은 것을 배울 수 있을 것입니다.

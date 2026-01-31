@@ -33,7 +33,8 @@ void sample()
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // Connect the first 3  vertices to form a triangle!
-        pangolin::glDrawVertices(vertices, GL_TRIANGLES);
+        // 비교적 간단하다. 정점 등록 -> 정점 활성화 -> 그리기 -> 정점 비활성화를 한 번에.
+        pangolin::glDrawVertices(vertices, GL_TRIANGLES); //
 
         // Process any windowing events and swap the back and front
         // OpenGL buffers if available.

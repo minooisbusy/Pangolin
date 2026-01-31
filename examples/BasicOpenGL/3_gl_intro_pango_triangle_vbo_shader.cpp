@@ -44,6 +44,7 @@ void sample()
     // Encapsulate a GlSl shader program to define how to render OpenGL primitives
     // The Pangolin GlSlProgram has a preprocessor which can seperate different kinds of
     // shaders and manage compile-time defines.
+    // 컴파일 및 바인딩이 쉬워졌어요~
     pangolin::GlSlProgram prog;
     prog.AddShader( pangolin::GlSlAnnotatedShader, my_shader );
     prog.Link();
@@ -60,7 +61,7 @@ void sample()
 
         // Update the shader u_time parameter and render the triangles
         // whilst this shader is active
-        prog.SetUniform("u_time", time);
+        prog.SetUniform("u_time", time); // 시간 설정도 칸단데스
         pangolin::RenderVbo(vbo, GL_TRIANGLES);
         time += 0.01;
 

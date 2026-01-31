@@ -10,6 +10,7 @@ int main( int /*argc*/, char** /*argv*/ )
 
     // Define Projection and initial ModelView matrix
     pangolin::OpenGlRenderState s_cam(
+        // Width, Height, fx, fy, px, py, 가까워서 무시, 멀어서 무시
         pangolin::ProjectionMatrix(640,480,420,420,320,240,0.2,100),
         pangolin::ModelViewLookAt(-2,2,-2, 0,0,0, pangolin::AxisY)
     );

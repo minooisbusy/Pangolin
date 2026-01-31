@@ -25,6 +25,7 @@ void sample()
     // be recalculated automatically during resize events.
 
     // Create two 'views' representing the left and right half of the window.
+    // 비율로 간다. 첫 두 파라미터는 높이, 뒤 두 개는 너비 파라미터
     auto& view1 = pangolin::CreateDisplay().SetBounds(0.0, 1.0, 0.0, 0.5);
     auto& view2 = pangolin::CreateDisplay().SetBounds(0.0, 1.0, 0.5, 1.0);
 

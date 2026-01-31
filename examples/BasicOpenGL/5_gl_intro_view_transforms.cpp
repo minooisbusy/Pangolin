@@ -20,23 +20,30 @@ void sample()
     // to the backplane dimensions and focal length (all in the same unit, say mm)
     // of a virtual pinhole camera (i.e. a camera with no lens and just a pinhole
     // apperture).
+    // 1. 가상의 핀홀 카메라 모델 정의
+    // 실제 카메라의 해상도와 초점거리를 설정하는 것과 같다. 
     const int gl_camera_width = 100;
     const int gl_camera_height = 100;
     const double gl_camera_focal_length = 100.0;
 
     // Create an application window of arbitrary dimensions
+    // 윈도우 생성
     pangolin::CreateWindowAndBind("Pango GL Triangle with VBO", 1024, 768);
 
     // Create a child view within the parent window which will stretch and grow
     // with the application window but maintain a fixed aspect of width to height
     // that will match the virtual camera we wish to render with respect to.
+    // 2. 가상 카메라의 종횡비에 맞춰 뷰포트 생성
+    // 화면의 크기가 변해도 렌더링되는 결과가 찌그러지지 않도록 고정 비율을 설정한다.
     auto& view = pangolin::CreateDisplay()
                     .SetAspect( (float)gl_camera_width / (float)gl_camera_height);
 
+    // 3. 렌더링 상태 관리 객체 (핵심 변환 행렬들)
     pangolin::OpenGlRenderState render_transforms(
         // The OpenGL Projection Matrix handles the transform from
         // Camera coordinates into Normalized Device Coordinates (within the Viewport)
         // It can be used to specify the action of the virtual OpenGL Camera
+        // 투영 행렬
         pangolin::ProjectionMatrix(
             gl_camera_width, gl_camera_height,
             gl_camera_focal_length, gl_camera_focal_length,
@@ -65,7 +72,7 @@ void sample()
     // Set the background color set during the glClear operation below.
     glClearColor(0.64f, 0.5f, 0.81f, 0.0f);
 
-    for( double time=0.0; !pangolin::ShouldQuit(); time += 0.01 )
+    for( double time=0.0; !pangolin::ShouldQuit(); time += 0.0001 )
     {
         // Clear both the color buffer but also the depth buffer.
         // Try just clearing the color buffer and see what happens!

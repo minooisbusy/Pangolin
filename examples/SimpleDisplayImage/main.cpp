@@ -36,7 +36,7 @@ int main(/*int argc, char* argv[]*/)
   // will have a fixed aspect ratio to match the image that it will display. When fitting
   // within the specified bounds, push to the top-left (as specified by SetLock).
   pangolin::View& d_image = pangolin::Display("image")
-      .SetBounds(2/3.0f,1.0f,0,1/3.0f,640.0/480)
+      .SetBounds(2/3.0f,1.0f,0,1/3.0f,640.0/480) // 좌하단이 원점
       .SetLock(pangolin::LockLeft, pangolin::LockTop);
 
   std::cout << "Resize the window to experiment with SetBounds, SetLock and SetAspect." << std::endl;
